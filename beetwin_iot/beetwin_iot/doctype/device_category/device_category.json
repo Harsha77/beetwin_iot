@@ -1,0 +1,99 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "hash",
+ "creation": "2024-12-30 15:43:30.474812",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_xeqe",
+  "lft",
+  "rgt",
+  "is_group",
+  "old_parent",
+  "parent_device_category",
+  "section_break_roev",
+  "device_category"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_xeqe",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "lft",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Left",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "rgt",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Right",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "label": "Is Group"
+  },
+  {
+   "fieldname": "old_parent",
+   "fieldtype": "Link",
+   "label": "Old Parent",
+   "options": "Device Category"
+  },
+  {
+   "fieldname": "parent_device_category",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Parent Device Category",
+   "options": "Device Category"
+  },
+  {
+   "fieldname": "section_break_roev",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "device_category",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Device Category"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_tree": 1,
+ "links": [],
+ "modified": "2024-12-30 16:41:31.869366",
+ "modified_by": "Administrator",
+ "module": "beetwin_iot",
+ "name": "Device Category",
+ "naming_rule": "Random",
+ "nsm_parent_field": "parent_device_category",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "show_title_field_in_link": 1,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "device_category",
+ "track_changes": 1
+}

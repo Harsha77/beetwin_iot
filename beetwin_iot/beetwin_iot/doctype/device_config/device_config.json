@@ -1,0 +1,152 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "format:{device_id}",
+ "creation": "2024-12-30 16:02:35.710721",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_w4yo",
+  "device_id",
+  "column_break_eqpj",
+  "is_new_config",
+  "acknowledge",
+  "section_break_nexe",
+  "device_desc_parameters",
+  "device_config_parameters",
+  "device_firmware_version_section",
+  "device_version",
+  "attach_yybs",
+  "column_break_tuxp",
+  "is_new_ota",
+  "otaacknowledge",
+  "device_versions"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_w4yo",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "device_id",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Device ID",
+   "options": "Device",
+   "unique": 1
+  },
+  {
+   "fieldname": "column_break_eqpj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_new_config",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is New Config"
+  },
+  {
+   "default": "0",
+   "fieldname": "acknowledge",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Acknowledge"
+  },
+  {
+   "fieldname": "section_break_nexe",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "device_config_parameters",
+   "fieldtype": "Table",
+   "label": "Device Config Parameters",
+   "options": "Device Config Key-Value"
+  },
+  {
+   "fieldname": "device_firmware_version_section",
+   "fieldtype": "Section Break",
+   "label": "Device Firmware Version"
+  },
+  {
+   "fieldname": "column_break_tuxp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_new_ota",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is New OTA"
+  },
+  {
+   "default": "0",
+   "fieldname": "otaacknowledge",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "OTA Acknowledge"
+  },
+  {
+   "fieldname": "device_desc_parameters",
+   "fieldtype": "Table",
+   "label": "Device Desc Parameters",
+   "options": "Device Config Key-Value",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "device_version.firmware_file",
+   "fieldname": "attach_yybs",
+   "fieldtype": "Attach"
+  },
+  {
+   "fieldname": "device_versions",
+   "fieldtype": "Table",
+   "label": "Device Versions",
+   "options": "Device Version Entry"
+  },
+  {
+   "fieldname": "device_version",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Device Version",
+   "options": "OTA Version"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-04-23 12:30:17.244547",
+ "modified_by": "Administrator",
+ "module": "beetwin_iot",
+ "name": "Device Config",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Guest",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

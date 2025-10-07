@@ -1,0 +1,15 @@
+{
+  "name": "beetwin_iot",
+  "version": "1.0.0",
+  "description": "This is the aap for beetwin iot platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "cd iotweet-dashboard && yarn install",
+    "dev": "cd iotweet-dashboard && yarn dev",
+    "build": "cd iotweet-dashboard && yarn build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

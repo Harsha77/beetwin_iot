@@ -1,0 +1,89 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{device_id}",
+ "creation": "2024-12-30 15:45:52.418460",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_ytqf",
+  "device_id",
+  "datetime",
+  "device_telemetry_data"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_ytqf",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "device_id",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Device ID",
+   "options": "Device"
+  },
+  {
+   "fieldname": "device_telemetry_data",
+   "fieldtype": "Table",
+   "label": "Device Telemerty Data",
+   "options": "Device Telemetry Key-Value"
+  },
+  {
+   "fieldname": "datetime",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Data Insertion Date Time"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-02-26 13:59:31.643549",
+ "modified_by": "Administrator",
+ "module": "beetwin_iot",
+ "name": "Device Telemetry",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Guest",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Administrator",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
