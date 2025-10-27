@@ -28,6 +28,7 @@
    "label": "Received At"
   },
   {
+   "description": "alues: Queued,Processed,Failed",
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
@@ -37,7 +38,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-10-28 00:38:14.867441",
+ "modified": "2025-10-28 00:48:13.420502",
  "modified_by": "Administrator",
  "module": "beetwin_iot",
  "name": "Device Data Queue",
