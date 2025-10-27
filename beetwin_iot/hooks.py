@@ -150,7 +150,15 @@ app_license = "mit"
 
 # Scheduled Tasks
 # ---------------
-
+# beetwin_iot/hooks.py
+scheduler_events = {
+    "cron": {
+        # run every minute
+        "* * * * *": [
+            "beetwin_iot.beetwin_iot.api.queue_processor.process_device_queue_async"
+        ]
+    }
+}
 # scheduler_events = {
 # 	"all": [
 # 		"beetwin_iot.tasks.all"
