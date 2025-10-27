@@ -31,13 +31,13 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "Queued,\nProcessed,\nFailed"
+   "options": "Queued\nProcessed\nFailed"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-10-21 10:57:14.926904",
+ "modified": "2025-10-28 00:38:14.867441",
  "modified_by": "Administrator",
  "module": "beetwin_iot",
  "name": "Device Data Queue",
