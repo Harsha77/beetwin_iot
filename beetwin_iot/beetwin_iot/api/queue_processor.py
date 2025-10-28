@@ -25,7 +25,7 @@ def process_device_queue_now(limit: int = 50):
         "failed": count_err,
     }
 
-
+@frappe.whitelist()  # authenticated users only
 def process_device_queue_async(limit: int = 100):
     """
     Enqueue background job to process queue. Call from scheduler or CLI.
