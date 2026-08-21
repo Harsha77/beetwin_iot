@@ -1,0 +1,97 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-10-16 13:59:33.800552",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_i3ke",
+  "queue_row",
+  "device_key",
+  "severity",
+  "reason_code",
+  "reason_detail",
+  "payload_json",
+  "received_at",
+  "processed_at",
+  "retry_count"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_i3ke",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "queue_row",
+   "fieldtype": "Link",
+   "label": "Queue Row",
+   "options": "Device Data Queue"
+  },
+  {
+   "fieldname": "device_key",
+   "fieldtype": "Data",
+   "label": "Device Key"
+  },
+  {
+   "fieldname": "severity",
+   "fieldtype": "Select",
+   "label": "Severity"
+  },
+  {
+   "fieldname": "reason_code",
+   "fieldtype": "Data",
+   "label": "Reason Code"
+  },
+  {
+   "fieldname": "reason_detail",
+   "fieldtype": "Long Text",
+   "label": "Reason Detail"
+  },
+  {
+   "fieldname": "payload_json",
+   "fieldtype": "Long Text",
+   "label": "Payload JSON"
+  },
+  {
+   "fieldname": "received_at",
+   "fieldtype": "Datetime",
+   "label": "Received At"
+  },
+  {
+   "fieldname": "processed_at",
+   "fieldtype": "Datetime",
+   "label": "Processed At"
+  },
+  {
+   "fieldname": "retry_count",
+   "fieldtype": "Int",
+   "label": "Retry Count"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-10-16 14:05:16.226118",
+ "modified_by": "Administrator",
+ "module": "beetwin_iot",
+ "name": "Device Ingest Diagnostic",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

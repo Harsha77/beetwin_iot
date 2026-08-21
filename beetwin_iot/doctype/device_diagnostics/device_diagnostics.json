@@ -1,0 +1,88 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-11-13 14:03:55.811459",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_nyx0",
+  "device_key",
+  "ts",
+  "invalid_fields",
+  "values",
+  "where",
+  "note",
+  "queue_row"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_nyx0",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "device_key",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Device Key"
+  },
+  {
+   "fieldname": "ts",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Record Timestamp"
+  },
+  {
+   "fieldname": "invalid_fields",
+   "fieldtype": "JSON",
+   "label": "Invalid Fields (JSON)"
+  },
+  {
+   "fieldname": "values",
+   "fieldtype": "Long Text",
+   "label": "Original Values (JSON)"
+  },
+  {
+   "fieldname": "where",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Caught At (Where)"
+  },
+  {
+   "fieldname": "note",
+   "fieldtype": "Small Text",
+   "label": "Note"
+  },
+  {
+   "fieldname": "queue_row",
+   "fieldtype": "Link",
+   "label": "Queue Row",
+   "options": "Device Data Queue"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-11-13 17:38:08.667603",
+ "modified_by": "Administrator",
+ "module": "beetwin_iot",
+ "name": "Device Diagnostics",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

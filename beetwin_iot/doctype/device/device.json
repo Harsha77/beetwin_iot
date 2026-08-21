@@ -1,0 +1,146 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "field:imei_number",
+ "creation": "2024-12-30 15:25:45.364445",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_aqtb",
+  "name1",
+  "imei_number",
+  "device_category",
+  "device_key",
+  "api_key",
+  "api_secret",
+  "column_break_aikh",
+  "is_set_keys",
+  "ack",
+  "device_group"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_aqtb",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.name",
+   "fieldname": "name1",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Name"
+  },
+  {
+   "fieldname": "imei_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "IMEI Number",
+   "unique": 1
+  },
+  {
+   "fieldname": "device_category",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Device Category",
+   "options": "Device Category"
+  },
+  {
+   "depends_on": "eval:doc.api_key",
+   "fieldname": "device_key",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Device Key"
+  },
+  {
+   "fieldname": "api_key",
+   "fieldtype": "Data",
+   "label": "API Key",
+   "read_only": 1
+  },
+  {
+   "fieldname": "api_secret",
+   "fieldtype": "Password",
+   "label": "API Secret",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_aikh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_set_keys",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is Set Keys"
+  },
+  {
+   "default": "0",
+   "fieldname": "ack",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Ack"
+  },
+  {
+   "fieldname": "device_group",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Device Group",
+   "options": "Device Group"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-02-27 17:19:05.575726",
+ "modified_by": "Administrator",
+ "module": "beetwin_iot",
+ "name": "Device",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "import": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Guest",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Administrator",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

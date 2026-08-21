@@ -1,0 +1,145 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "format:{device_id}",
+ "creation": "2025-06-16 18:16:53.225648",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_w4yo",
+  "device_id",
+  "column_break_eqpj",
+  "is_new_calib",
+  "acknowledge",
+  "section_break_nexe",
+  "device_desc_parameters",
+  "device_calib_parameters",
+  "device_firmware_version_section",
+  "device_version",
+  "attach_yybs",
+  "column_break_tuxp",
+  "is_new_ota",
+  "otaacknowledge"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_w4yo",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "device_id",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Device ID",
+   "options": "Device",
+   "unique": 1
+  },
+  {
+   "fieldname": "column_break_eqpj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "acknowledge",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Acknowledge"
+  },
+  {
+   "fieldname": "section_break_nexe",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "device_desc_parameters",
+   "fieldtype": "Table",
+   "label": "Device Desc Parameters",
+   "options": "Device Calib Key-Value",
+   "read_only": 1
+  },
+  {
+   "fieldname": "device_firmware_version_section",
+   "fieldtype": "Section Break",
+   "label": "Device Firmware Version"
+  },
+  {
+   "fieldname": "device_version",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Device Version",
+   "options": "OTA Version"
+  },
+  {
+   "fetch_from": "device_version.firmware_file",
+   "fieldname": "attach_yybs",
+   "fieldtype": "Attach"
+  },
+  {
+   "fieldname": "column_break_tuxp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_new_ota",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is New OTA"
+  },
+  {
+   "default": "0",
+   "fieldname": "otaacknowledge",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "OTA Acknowledge"
+  },
+  {
+   "fieldname": "device_calib_parameters",
+   "fieldtype": "Table",
+   "label": "Device Calib Parameters",
+   "options": "Device Calib Key-Value"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_new_calib",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is New Calib"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-06-16 18:22:08.929111",
+ "modified_by": "Administrator",
+ "module": "beetwin_iot",
+ "name": "Device Calib",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Guest",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
