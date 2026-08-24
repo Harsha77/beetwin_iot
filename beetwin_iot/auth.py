@@ -84,9 +84,9 @@ def validate_api_key_secret(*args, **kwargs):
             frappe.local.request.environ.pop('HTTP_AUTHORIZATION')
 
             # Simple print statements for logging to the console
-            print(f"Request Path: {current_route}")
-            print(f"Request Headers after modification: {dict(frappe.request.headers)}")
-            print(f"Request Body: {request_data}")
+            #+print(f"Request Path: {current_route}")
+            #print(f"Request Headers after modification: {dict(frappe.request.headers)}")
+            #print(f"Request Body: {request_data}")
 
             # Mark the user as a guest
             frappe.set_user('Guest')

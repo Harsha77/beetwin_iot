@@ -9,10 +9,21 @@
     "copy-html-entry": "cp ../beetwin_iot/public/beetwin_hs/index.html ../beetwin_iot/www/beetwin_hs.html"
   },
   "dependencies": {
-    "feather-icons": "^4.29.2",
-    "frappe-ui": "1.15.2",
+    "@vue-leaflet/vue-leaflet": "0.10.1",
+    "axios": "1.7.9",
+    "chart.js": "4.4.7",
+    "echarts": "5.5.1",
+    "feather-icons": "4.29.2",
+    "frappe-ui": "0.1.152",
+    "html2canvas": "1.4.1",
+    "jspdf": "2.5.2",
+    "jspdf-autotable": "3.8.4",
+    "leaflet": "1.9.4",
     "vue": "^3.5.12",
-    "vue-router": "^4.4.5"
+    "vue-chartjs": "5.3.2",
+    "vue-echarts": "7.0.3",
+    "vue-router": "^4.4.5",
+    "xlsx": "0.18.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.1.4",

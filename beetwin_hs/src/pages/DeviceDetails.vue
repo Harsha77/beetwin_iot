@@ -7,7 +7,7 @@
       </button>
 
       <h2 class="text-xl font-bold text-center w-full">
-        Sr.No: {{ $route.query.serialNumber || 'N/A' }} | ID: {{ deviceId }}
+        Location Name: {{ $route.query.serialNumber || 'N/A' }}
       </h2>
 
       <button @click="downloadReport" class="ml-4">
@@ -25,7 +25,7 @@
         <label class="font-semibold">To Date:</label>
         <input type="date" v-model="toDate" class="border rounded px-2 py-1">
       </div>
-      <button @click="filterData" class="bg-[#08444c] text-white px-4 py-2 rounded">Generete Report</button>
+      <button @click="filterData" class="bg-[#00a3d3] text-white px-4 py-2 rounded">Generete Report</button>
     </div>
 
     <!-- Loader (Show when data is loading) -->
@@ -44,10 +44,10 @@
           <thead class="bg-gray-200">
             <tr>
               <th class="border border-gray-300 px-4 py-2">Timestamp</th>
-              <th class="border border-gray-300 px-4 py-2">Pressure (bar)</th>
-              <th class="border border-gray-300 px-4 py-2">Battery (%)</th>
-              <th class="border border-gray-300 px-4 py-2">Sensor Health</th>
-              <th class="border border-gray-300 px-4 py-2">Signal Strength</th>
+              <th class="border border-gray-300 px-4 py-2">Flowrate</th>
+              <th class="border border-gray-300 px-4 py-2">Totaliser</th>
+              <th class="border border-gray-300 px-4 py-2">Pressure</th>
+
             </tr>
           </thead>
 
@@ -56,8 +56,8 @@
               <td class="border border-gray-300 px-4 py-2">{{ data.timestamp.slice(0, 16) }}</td>
               <td class="border border-gray-300 px-4 py-2">{{ data.pv }}</td>
               <td class="border border-gray-300 px-4 py-2">{{ data.bt }}</td>
-              <td class="border border-gray-300 px-4 py-2">{{ data.ht }}</td>
-              <td class="border border-gray-300 px-4 py-2">{{ data.rssi }}</td>
+              <td class="border border-gray-300 px-4 py-2">{{ data.pressure }}</td>
+
             </tr>
           </tbody>
         </table>
@@ -73,8 +73,11 @@
     <div class="graph-container mt-6 p-4 border border-gray-300 rounded bg-white w-full overflow-x-auto">
       <div class="flex items-center justify-between">
         <h3 class="text-lg font-bold text-center w-full">
-          Pressure Graph - <span class="text-gray-600">{{ $route.query.serialNumber || 'N/A' }}</span>
-        </h3>
+  Flowrate Graph -
+  <span class="text-gray-600">
+    {{ $route.query.serialNumber || "N/A" }}
+  </span>
+</h3>
         <button @click="downloadGraph" class="ml-auto w-8 h-8 md:w-10 md:h-10">
           <img src="/Download.png" alt="Download" class="w-full h-full" />
         </button>
@@ -123,7 +126,7 @@
 .sticky-header thead th {
   position: sticky;
   top: 0;
-  background-color: #08444c;
+  background-color: #00a3d3;
   /* Match your theme */
   color: white;
   z-index: 10;
@@ -221,7 +224,7 @@ const downloadGraph = async () => {
 
     const link = document.createElement("a");
     link.href = imgData;
-    link.download = `Pressure_Graph_${route.query.serialNumber || 'N/A'}.jpg`;
+    link.download = `Flowrate_Graph_${route.query.serialNumber || "N/A"}.jpg`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -241,13 +244,13 @@ const downloadReport = () => {
   const serialNumber = route.query.serialNumber || "N/A";
   // Create Header Row
   const headerRow = [
-    [`Time Series Table For (Sr.No: ${serialNumber} |ID: ${deviceId.value})`]
+    [`Location Name: ${serialNumber}`]
   ];
 
 
   // Define Table Headers
   const tableHeaders = [
-    ["Timestamp", "Pressure (bar)", "Battery (%)", "Sensor Health", "Latitude", "Longitude", "Signal Strength"]
+    ["Timestamp", "Flowrate", "Totaliser", "Pressure"]
   ];
 
   // Convert Report Data to Array Format
@@ -255,10 +258,7 @@ const downloadReport = () => {
     data.timestamp.slice(0, 16),
     data.pv,
     data.bt,
-    data.ht,
-    data.lat,
-    data.long,
-    data.rssi
+    data.pressure
   ]);
 
   // Combine Header + Table Headers + Data
@@ -368,79 +368,283 @@ const filterData = async () => {
 
 
 const chartOptions = computed(() => {
-  if (!reportData.value || reportData.value.length === 0) {
-    console.log("No data available in reportData");
-    return { title: { text: "No Data Available", left: "center", top: "center" } };
+  if (
+    !Array.isArray(reportData.value) ||
+    reportData.value.length === 0
+  ) {
+    return {
+      title: {
+        text: "No Flowrate Data Available",
+        left: "center",
+        top: "center",
+        textStyle: {
+          color: "#6b7280",
+          fontSize: 16
+        }
+      }
+    };
   }
 
-  // 1️⃣ Filter out invalid `pv` values **and their timestamps**
-  const filteredData = reportData.value.filter(d => {
-    return d.pv !== null && d.pv !== undefined && d.pv !== "" && !isNaN(d.pv);
-  });
+  /*
+   * Convert the API response into clean graph data.
+   * Prefer flowrate; use pv only for older records.
+   */
+  const validData = reportData.value
+    .map((record) => {
+      const rawFlowrate =
+        record.flowrate ??
+        record.Flowrate ??
+        record.pv;
 
-  // 2️⃣ Debugging: Ensure all invalid values are removed
-  console.log("Filtered Data:", filteredData);
+      const numericFlowrate =
+        Number(rawFlowrate);
 
-  if (filteredData.length === 0) {
-    return { title: { text: "No Valid Data Available", left: "center", top: "center" } };
+      return {
+        timestamp: record.timestamp,
+        flowrate: numericFlowrate
+      };
+    })
+    .filter((record) => {
+      return (
+        record.timestamp &&
+        Number.isFinite(record.flowrate)
+      );
+    })
+    .sort((first, second) => {
+      const firstTime = new Date(
+        String(first.timestamp).replace(" ", "T")
+      ).getTime();
+
+      const secondTime = new Date(
+        String(second.timestamp).replace(" ", "T")
+      ).getTime();
+
+      return firstTime - secondTime;
+    });
+
+  if (validData.length === 0) {
+    return {
+      title: {
+        text: "No Valid Flowrate Data Available",
+        left: "center",
+        top: "center",
+        textStyle: {
+          color: "#6b7280",
+          fontSize: 16
+        }
+      }
+    };
   }
 
-  // 3️⃣ Reverse the data order to ensure the latest timestamp is on the right side
-  const sortedData = [...filteredData].reverse();
+  const timestamps = validData.map(
+    (record) => {
+      const date = new Date(
+        String(record.timestamp).replace(
+          " ",
+          "T"
+        )
+      );
 
-  // 4️⃣ Extract timestamps and pressure values **after reversing**
-  const timestamps = [];
-  const pressureValues = [];
+      const day = String(
+        date.getDate()
+      ).padStart(2, "0");
 
-  sortedData.forEach((d) => {
-    const date = new Date(d.timestamp);
-    const formattedDate = `${String(date.getDate()).padStart(2, "0")}/${String(date.getMonth() + 1).padStart(2, "0")} ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
+      const month = String(
+        date.getMonth() + 1
+      ).padStart(2, "0");
 
-    timestamps.push(formattedDate);
-    pressureValues.push(parseFloat(d.pv));
-  });
+      const hours = String(
+        date.getHours()
+      ).padStart(2, "0");
 
-  // 5️⃣ Debugging: Ensure timestamps and pressure values match
-  console.log("Timestamps (oldest → newest):", timestamps);
-  console.log("Pressure Values:", pressureValues);
+      const minutes = String(
+        date.getMinutes()
+      ).padStart(2, "0");
+
+      const seconds = String(
+        date.getSeconds()
+      ).padStart(2, "0");
+
+      return `${day}/${month} ${hours}:${minutes}:${seconds}`;
+    }
+  );
+
+  const flowrateValues = validData.map(
+    (record) => record.flowrate
+  );
+
+  /*
+   * Create a dynamic Y-axis around the actual values.
+   *
+   * Example values 244–258 will produce approximately
+   * a 239–263 range instead of always showing 0–300.
+   * This makes small changes clearly visible.
+   */
+  const minimumFlowrate =
+    Math.min(...flowrateValues);
+
+  const maximumFlowrate =
+    Math.max(...flowrateValues);
+
+  const valueDifference =
+    maximumFlowrate - minimumFlowrate;
+
+  const axisPadding = Math.max(
+    valueDifference * 0.15,
+    5
+  );
+
+  const yAxisMinimum = Math.max(
+    0,
+    Math.floor(
+      minimumFlowrate - axisPadding
+    )
+  );
+
+  const yAxisMaximum = Math.ceil(
+    maximumFlowrate + axisPadding
+  );
+
+  /*
+   * Display approximately ten timestamp labels.
+   * All points remain present in the graph.
+   */
+  const labelInterval = Math.max(
+    0,
+    Math.ceil(timestamps.length / 10) - 1
+  );
 
   return {
-    tooltip: { trigger: "axis" },
-    grid: { left: "10%", right: "5%", bottom: "15%", containLabel: true },
+    animation: true,
+    animationDuration: 500,
+
+    color: ["#00a3d3"],
+
+    tooltip: {
+      trigger: "axis",
+      backgroundColor: "rgba(8, 68, 76, 0.95)",
+      borderColor: "#00a3d3",
+      borderWidth: 1,
+      textStyle: {
+        color: "#ffffff"
+      },
+      formatter: (parameters) => {
+        const point = parameters?.[0];
+
+        if (!point) {
+          return "";
+        }
+
+        return `
+          <strong>${point.axisValue}</strong><br/>
+          Flowrate: <strong>${Number(
+            point.data
+          ).toFixed(3)}</strong>
+        `;
+      }
+    },
+
+    grid: {
+      left: "4%",
+      right: "4%",
+      top: "15%",
+      bottom: "22%",
+      containLabel: true
+    },
+
     xAxis: {
       type: "category",
       boundaryGap: false,
-      data: timestamps, // Now correctly ordered timestamps
-      axisLabel: { fontSize: window.innerWidth < 768 ? 10 : 12, rotate: 30, interval: "auto" },
+      data: timestamps,
+      name: "Timestamp",
+      nameLocation: "middle",
+      nameGap: 58,
+      axisLine: {
+        lineStyle: {
+          color: "#9ca3af"
+        }
+      },
+      axisTick: {
+        alignWithLabel: true
+      },
+      axisLabel: {
+        fontSize:
+          window.innerWidth < 768
+            ? 9
+            : 11,
+        rotate: 35,
+        interval: labelInterval,
+        color: "#374151"
+      }
     },
+
     yAxis: {
       type: "value",
-      name: "Pressure (bar)",
-     // min: 0,
-      min: function (value) {
-        return Math.floor(value.min * 0);
+      name: "Flowrate",
+      nameLocation: "middle",
+      nameGap: 50,
+      min: yAxisMinimum,
+      max: yAxisMaximum,
+      splitNumber: 6,
+      scale: true,
+      axisLabel: {
+        color: "#374151",
+        fontSize:
+          window.innerWidth < 768
+            ? 9
+            : 11,
+        formatter: (value) =>
+          Number(value).toFixed(1)
       },
-      //max: 0.10,
-      max: function (value) {
-        return Math.ceil(value.max * 1.1);
+      axisLine: {
+        show: true,
+        lineStyle: {
+          color: "#9ca3af"
+        }
       },
-      interval: 0.5,
-      axisLabel: { formatter: (value) => value.toFixed(2) + " bar", fontSize: window.innerWidth < 768 ? 10 : 12 },
-     // splitNumber: 155,
-      splitLine: { show: true, lineStyle: { type: "dashed", color: "#ddd" } },
+      splitLine: {
+        show: true,
+        lineStyle: {
+          type: "dashed",
+          color: "#d1d5db"
+        }
+      }
     },
+
     series: [
       {
-        name: "Pressure",
+        name: "Flowrate",
         type: "line",
-        data: pressureValues, // Now correctly ordered values
+        data: flowrateValues,
         smooth: true,
-        lineStyle: { width: 3, color: "#FFA500" },
+        connectNulls: false,
+        showSymbol:
+          flowrateValues.length <= 30,
         symbol: "circle",
-        symbolSize: window.innerWidth < 768 ? 4 : 6,
-        areaStyle: { color: "rgba(255, 165, 0, 0.2)" },
-      },
-    ],
+        symbolSize: 6,
+        lineStyle: {
+          width: 3,
+          color: "#FFA500"
+        },
+        itemStyle: {
+          color: "#FFA500",
+          borderColor: "#ffffff",
+          borderWidth: 2
+        },
+        areaStyle: {
+          color: "rgba(0, 163, 211, 0.15)"
+        },
+        emphasis: {
+          focus: "series",
+          itemStyle: {
+            borderWidth: 3,
+            shadowBlur: 10,
+            shadowColor:
+              "rgba(0, 163, 211, 0.5)"
+          }
+        }
+      }
+    ]
   };
 });
 
@@ -578,11 +782,14 @@ const resetMap = () => {
   initializeMap();
 };
 
-watch(reportData, () => {
-  resetMap();  // 🔥 Reset the map when data changes
-  updateMap();
-  chartOptions.value = { ...chartOptions.value }; // Trigger chart update
-}, { deep: true });
+watch(
+  reportData,
+  () => {
+    resetMap();
+    updateMap();
+  },
+  { deep: true }
+);
 
 onMounted(async () => {
   await fetchReportData(); // Ensure data is fetched first

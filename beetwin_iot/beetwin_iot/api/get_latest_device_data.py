@@ -232,14 +232,15 @@ def filter_valid_telemetry(entries):
     """
     Ensure only valid telemetry keys are included, completely ignoring keys that start with 't'.
     """
-    valid_keys = {"srno", "lat", "long", "rssi", "pv", "bt", "ht"}
+    # valid_keys = {"srno", "lat", "long", "rssi", "pv", "bt", "ht"}
+    valid_keys = {"srno", "flowrate", "total", "total"}
     telemetry_map = {}
 
     for record in entries:
         key = record["key"].lower()
         
         # Ignore any key that starts with 't'
-        if key.startswith("t"):
+        if key.startswith("h"):
             continue  # Completely skip this key
 
         if key in valid_keys:  # Only add explicitly allowed keys
@@ -285,14 +286,15 @@ def get_all_device_data():
             # Initialize telemetry data
             telemetry_data = {
                 "Device ID": device_id,
-                "Serial Number": None,
+                "Serial Number": device_id,
                 "Timestamp": None,
-                "Battery (%)": None,
-                "Pressure (bar)": None,
-                "Sensor Health": None,
-                "Latitude": None,
-                "Longitude": None,
-                "RSSI Value": None
+                "Flowrate": None,
+                "Totaliser": None
+                
+                # "Sensor Health": None,
+                # "Latitude": None,
+                # "Longitude": None,
+                # "RSSI Value": None
             }
 
             latest_timestamp = None
@@ -302,13 +304,13 @@ def get_all_device_data():
             filtered_values = filter_valid_telemetry(latest_entries)
 
             # Assign filtered values to the telemetry_data dictionary
-            telemetry_data["Serial Number"] = filtered_values.get("srno")
-            telemetry_data["Latitude"] = filtered_values.get("lat")
-            telemetry_data["Longitude"] = filtered_values.get("long")
-            telemetry_data["RSSI Value"] = filtered_values.get("rssi")
-            telemetry_data["Pressure (bar)"] = filtered_values.get("pv")
-            telemetry_data["Battery (%)"] = filtered_values.get("bt")
-            telemetry_data["Sensor Health"] = filtered_values.get("ht")
+            telemetry_data["Serial Number"] = device_id
+            telemetry_data["Flowrate"] = filtered_values.get("flowrate")
+            telemetry_data["Totaliser"] = filtered_values.get("total")
+            # telemetry_data["RSSI Value"] = filtered_values.get("rssi")
+            # telemetry_data["Pressure (bar)"] = filtered_values.get("pv")
+            # telemetry_data["Battery (%)"] = filtered_values.get("bt")
+            # telemetry_data["Sensor Health"] = filtered_values.get("ht")
 
             # Assign the most recent timestamp
             for record in latest_entries:
@@ -335,7 +337,7 @@ def get_all_device_data():
             # Append only if at least one telemetry value (except Device ID and Timestamp) is non-null
             if telemetry_data["Timestamp"] and any(
                 telemetry_data[key] not in [None, "", "null"]  # Checking for null, empty, or string "null"
-                for key in ["Serial Number", "Battery (%)", "Pressure (bar)", "Sensor Health", "Latitude", "Longitude", "RSSI Value"]
+                for key in ["Serial Number", "Flowrate", "Totaliser"]
             ):
                 all_telemetry_data.append(telemetry_data)
 
@@ -348,7 +350,7 @@ def get_all_device_data():
             device for device in all_telemetry_data 
             if any(
                 device[key] not in [None, "", "null"]  # Ensuring values are not None, empty, or "null" string
-                for key in ["Serial Number", "Battery (%)", "Pressure (bar)", "Sensor Health", "Latitude", "Longitude", "RSSI Value"]
+                for key in ["Serial Number", "Flowrate", "Totaliser"]
             )
         ]
 
