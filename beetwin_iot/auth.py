@@ -26,6 +26,7 @@ def validate_api_key_secret(*args, **kwargs):
         "/api/method/beetwin_iot.beetwin_iot.api.get_device_config.get_device_config"
         "/api/method/beetwin_iot.beetwin_iot.api.get_latest_device_data_for_Production.get_filtered_device_data_for_production"
         "/api/method/beetwin_iot.beetwin_iot.api.changedpassword.admin_change_password"
+        "/api/method/beetwin_iot.beetwin_iot.api.get_device_telemetry.get_public_device_telemetry"
         
         
  
